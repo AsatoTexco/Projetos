@@ -1,10 +1,11 @@
 <?php
 
-$url = "localhost/projeto/index.php";
+$url = "localhost/projeto/api_first.php";
 
 // email e senha encodados em base64 e dps criptografado em md5
 $emailSenha = "arthur2006.teixeira@gmail.com".":"."phpupgrade!";
 $pwd = md5(base64_encode($emailSenha));
+ 
  
 
 $header = [
@@ -29,9 +30,10 @@ curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($data));
 $response = curl_exec($curl);
 
 curl_close($curl);
+// print($response);
+$responseArray = json_decode($response,true);
 
-var_dump($response);
-
+//  print_r($responseArray);
 
 
 ?>

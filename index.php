@@ -1,46 +1,40 @@
 <?php
-$dadosRecebidos = json_decode(file_get_contents('php://input'), true);
-$headers = getallheaders();
+$lista = [
+    "idade"=>19,
+    "altura"=>1.8,
+    'caracteristicas' => [
+        'cor' => "branca",
+        'cpf' => '92316293229',
+        'legal' => "sim"
+    ]
+];
 
+$listaJson = json_encode($lista);
 
-$token = $headers['Authorization'];
+// para setar cookie: [setcookie("nome_cookie","conteudo(json)",tempo("time() + tempo em segundos que ficara"))]
 
-if($token != "Bearer beea1d4e62abb449534b33598b77f63a"){
+setcookie("usertoken", "", - (time()+20*24*60*60));
 
-    $responseArray = [
-
-        "error" => "Token de Acesso invalido, melhore!",
-        
-    
-    
-    ]; 
-
-}else{
-
-
-    $responseArray = [
-    
-        "name" => "Arthur",
-        "age"  => 17,
-        "cep"  => "79084170",
-        "caracteristicas" => [
-            'peso' => 80,
-            'altura' => 1.80,
-            'sexo'  => 'Masculino',
-            'credenciais' => $token,
-        ],
-    
-    
-    ]; 
-
-}
-
-$responseJson = json_encode($responseArray);
-
-header('Content-Type: application/json');
-
-echo($responseJson);
-
+var_dump($_COOKIE);
+ 
+ 
  
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
 
+        body{
+            color: white;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
