@@ -13,7 +13,7 @@ $listaJson = json_encode($lista);
 
 // para setar cookie: [setcookie("nome_cookie","conteudo(json)",tempo("time() + tempo em segundos que ficara"))]
 
-setcookie("usertoken", "", - (time()+20*24*60*60));
+setcookie("usertoken", "tes",  (time()+20*24*60*60));
 
 var_dump($_COOKIE);
  
