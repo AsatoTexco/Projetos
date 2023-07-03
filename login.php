@@ -1,26 +1,41 @@
 <?php
 session_start();
-require "config.php";
+require './Classes/Usuario.php';
 
-if(isset($_COOKIE['id_user'])){
 
-    $_SESSION['id_user'] = $_COOKIE['id_user'];
+ 
 
+
+$passDb = '$uP0rT3@22';
+
+$usuario = new Usuario;
+
+$usuario->conectar('api','localhost','root',$passDb);
+if($usuario->msgErro != ""){
+    /*SWEETALERT2?!*/
+    echo("Houve um erro ao conectar no servidor, tente novamente mais tarde");
+}
+
+
+ 
+
+if(isset($_COOKIE['dados_logado'])){
+
+    $dados_logadoArray = json_decode($_COOKIE['dados_logado'],true);
+    
+    $_SESSION['id_user'] = $dados_logadoArray['id'];
+  
+     
     // cookie ficara setado para 2 dias como LOGADO 
     setcookie("id_user",$_COOKIE['id_user'],time() + (2*24*60*60));
-
-    echo("Usuario ja logado");
+    header("Location: ./pages/menu.php");
+    
 }else{
 
 
-    if(isset($_POST['email']) && isset($_POST['senha'])){
+     if(isset($_POST['email']) and isset($_POST['senha'])){
     
-        $sql = $pdo->prepare("SELECT * FROM user WHERE email = :e AND senha = :s");
-        $sql->bindValue(":e", $_POST['email']);
-        $sql->bindValue(":s", $_POST['senha']);
-        $sql->execute();
-    
-        if($sql->rowCount() > 0){
+        if($usuario->logar($_POST['email'],$_POST['senha'])){
     
             $lista = [];
             $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -35,7 +50,7 @@ if(isset($_COOKIE['id_user'])){
             echo("Logado com Sucesso!");
     
         }
-    }
+    } 
 }
     
 ?>
